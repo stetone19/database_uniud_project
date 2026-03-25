@@ -1,13 +1,90 @@
-\documentclass{article}
+\documentclass[a4paper,12pt]{article}
+
+% --- Pacchetti Consigliati ---
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{tabularx} % Per tabelle flessibili
+\usepackage{booktabs} % Per linee delle tabelle più eleganti
+\usepackage{enumitem} % Per personalizzare le liste
 
-\title{Progetto Basi di Dati}
-\author{Federico Del Pup \\ Luigi Pascu \\ Matteo Passador \\ Stefano Toneguzzo}
-\date {Marzo 2026}
+\title{Progetto di Basi di Dati}
+\author{Federico Del Pup \\ Luigi Pa\textcommabelow{s}cu \\ Matteo Passador \\ Stefano Toneguzzo}
+\date{\today}
+
 \begin{document}
-\section{Indice}
-\tableofcontents
-\newpage
-\section{Introduzione}
+
+\maketitle
+
+\section{Glossario dei termini}
+
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Termine} & \textbf{Descrizione} & \textbf{Collegamenti} \\
+\midrule
+Pubblicazione & Elemento di bibliografia & Autore, Pubblicazione \\
+Articolo su rivista & Tipo di pubblicazione & Autore, Pubblicazione \\
+Articolo per conferenza & Tipo di pubblicazione & Autore, Pubblicazione \\
+Libro & Tipo di pubblicazione & Autore, Pubblicazione, Editor \\
+Tesi & Tipo di pubblicazione & Autore, Pubblicazione, Università \\
+Autore & Persona che scrive una pubblicazione & Pubblicazione, Affiliazione \\
+Affiliazione & Gruppo di autori & Autore \\
+Editore & Entità che pubblica un libro & Libro \\
+Università & Luogo di discussione della tesi & Tesi \\
+\bottomrule
+\end{tabularx}
+
+\section{Strutturazione dei requisiti}
+
+\subsection{Frasi di carattere generale}
+Si supponga di aver collezionato il seguente insieme di requisiti per la progettazione di una base di dati relazionale per la gestione di una bibliografia. Una bibliografia è costituita da un insieme di pubblicazioni.
+
+\subsection{Dettaglio dei requisiti}
+\begin{itemize}[label=\textbullet]
+    \item \textbf{Pubblicazioni:} Ogni pubblicazione è caratterizzata da un codice univoco, un titolo, un anno di pubblicazione e uno o più autori. È presente una lista di riferimenti bibliografici (citazioni) verso altre pubblicazioni della bibliografia. Ogni pubblicazione tiene traccia del numero di citazioni ricevute.
+    
+    \item \textbf{Articoli su rivista:} Si registrano il nome della rivista, il numero del volume, le pagine (iniziale e finale) e il numero totale di pagine.
+    
+    \item \textbf{Articoli per conferenza:} Si registrano nome e luogo della conferenza, anno di svolgimento (indipendente dall'anno di pubblicazione), pagine (iniziale/finale) e totale pagine.
+    
+    \item \textbf{Libri:} Identificati dal codice ISBN, includono l'editore e il numero totale di pagine.
+    
+    \item \textbf{Tesi:} Si memorizzano l'argomento, l'università di discussione e il numero totale di pagine.
+    
+    \item \textbf{Autori:} Di ogni autore si memorizzano nome, cognome, email, pagina Web e una o più affiliazioni.
+    
+    \item \textbf{Affiliazioni:} Descritte da nome, indirizzo completo (via, civico, città, nazione) e numero di telefono.
+    
+    \item \textbf{Editori:} Descritti da nome e indirizzo fisico.
+    
+    \item \textbf{Università:} Identificate univocamente dal nome, includono indirizzo e telefono.
+\end{itemize}
+
+\section{Tavola dei volumi}
+
+\begin{tabularx}{\textwidth}{l c r}
+\toprule
+\textbf{Concetto} & \textbf{Tipo} & \textbf{Volume} \\
+\midrule
+Pubblicazione & E & 100.000 \\
+Articolo su rivista & E & 20.000 \\
+Articolo per conferenza & E & 15.000 \\
+Libro & E & 10.000 \\
+Tesi & E & 55.000 \\
+Autore & E & 70.000 \\
+Affiliazione & E & 500 \\
+Editore & E & 400 \\
+Università & E & 300 \\
+Ente di ricerca & E & 200 \\
+\midrule
+Citazione & R & $100k \times 20$ \\
+Scritto & R & $3,3 \times 100k$ \\
+Appartenenza & R & $70k \times 2$ \\
+Sede & R & 55.000 \\
+Pubblica & R & 10.000 \\
+\bottomrule
+\end{tabularx}
+
 \end{document}

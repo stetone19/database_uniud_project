@@ -1,0 +1,8 @@
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\contentsline {section}{\numberline {1}Indice}{1}{}%
+\contentsline {section}{\numberline {2}Glossario dei termini}{2}{}%
+\contentsline {section}{\numberline {3}Strutturazione dei requisiti}{2}{}%
+\contentsline {subsection}{\numberline {3.1}Frasi di carattere generale}{2}{}%
+\contentsline {subsection}{\numberline {3.2}Dettaglio dei requisiti}{2}{}%
+\contentsline {section}{\numberline {4}Tavola dei volumi}{4}{}%
