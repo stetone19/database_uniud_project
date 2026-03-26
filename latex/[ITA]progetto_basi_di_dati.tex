@@ -1,14 +1,17 @@
 \documentclass[a4paper,12pt]{article}
 
-% --- Pacchetti Consigliati ---
+% --- Pacchetti ---
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
-\usepackage[T1]{fontenc}
-\usepackage{geometry}
+\usepackage[T1]{fontenc} 
+\usepackage{geometry} 
 \geometry{margin=2.5cm}
 \usepackage{tabularx} % Per tabelle flessibili
 \usepackage{booktabs} % Per linee delle tabelle più eleganti
 \usepackage{enumitem} % Per personalizzare le liste
+\usepackage{graphicx} % Per includere immagini (se necessario)
+\usepackage{float} % Per posizionare le figure
+\usepackage{amsmath} % Per formule matematiche
 
 \title{Progetto di Basi di Dati}
 \author{Federico Del Pup \\ Luigi Pa\textcommabelow{s}cu \\ Matteo Passador \\ Stefano Toneguzzo}
@@ -17,6 +20,14 @@
 \begin{document}
 
 \maketitle
+\section{Indice}
+\begin{itemize}
+    \item \textbf{Glossario dei termini} (Sezione 2)
+    \item \textbf{Strutturazione dei requisiti} (Sezione 3)
+    \item \textbf{Tavola dei volumi} (Sezione 4)
+    \item \textbf{Schema concettuale} (Sezione 5)
+    \item \textbf{Schema logico} (Sezione 6)
+\end{itemize}
 
 \section{Glossario dei termini}
 
@@ -86,5 +97,73 @@ Sede & R & 55.000 \\
 Pubblica & R & 10.000 \\
 \bottomrule
 \end{tabularx}
+
+\section{Schema concettuale}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/schemaERgrezzo.png} % image file path
+    \caption{Schema ER grezzo iniziale}
+    \label{fig:label_immagine}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/schemaER1.png} % image file path
+    \caption{Schema ER modificato dopo la prima revisione}
+    \label{fig:label_immagine2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/schemaER2.png} % image file path
+    \caption{Schema ER modificato dopo la seconda revisione}
+    \label{fig:label_immagine3}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/schemaER3.png} % image file path
+    \caption{Schema ER modificato dopo la terza revisione}
+    \label{fig:label_immagine4}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/schemaER4.png} % image file path
+    \caption{Schema ER modificato dopo la quarta revisione}
+    \label{fig:label_immagine5}
+\end{figure}
+
+% % \begin{figure}[h]
+% %    \centering
+% %    \includegraphics[width=0.8\textwidth]{img/schemaERfinale4.png} % image file path
+% %    \caption{Descrizione dell'immagine}
+% %    \label{fig:label_immagine}
+% \end{figure}
+
+
+\section{Schema logico}
+
+PUBBLICAZIONI(\underline{Codice},Titolo, Anno, NumeroCitazioni) \\
+ARTICOLI(\underline{CodicePubblicazione} (FK: PUBBLICAZIONI.Codice),Nome, NumeroRivista, LuogoRivista, Anno, PaginaIniziale, PaginaFinale, Tipo) \\
+LIBRI(\underline{ISBN}, NumeroPagine, NomeEditore) \\
+TESI(Argomento, NumeroPagine, Affiliazione) \\
+AUTORI(\underline{ID}, Nome, Cognome, Email, SitoWeb) \\
+AFFILIAZIONI(\underline{Nome}, IndirizzoFisico, NumeroTelefono, Tipo) \\
+EDITORI(\underline{Nome}) \\
+CITAZIONI(\underline{PubblicazioneChiamante}, \underline{PubblicazioneCitata}) \\
+PUBB-AUTORI(\underline{IDAutore}, \underline{CodicePubblicazione}) \\
+AUT-AFF(\underline{IDAutore}, \underline{NomeAffiliazione}) \\
+
+AFFILIAZIONE.Tipo può essere NULL \\
+Eventuali NULL vanno ricontrollati dalla traccia
+
+\textbf{Chiavi esterne:} \\
+$\text{ARTICOLI.CodicePubblicazione} \rightarrow \text{PUBBLICAZIONI.Codice}$ \\
+$\text{LIBRI.CodicePubblicazione} \rightarrow \text{PUBBLICAZIONI.Codice}$ \\
+$\text{TESI.CodicePubblicazione} \rightarrow \text{PUBBLICAZIONI.Codice}$ \\
+$\text{CITAZIONI.PubblicazioneChiamante} \rightarrow \text{PUBBLICAZIONI.Codice}$ \\
+$\text{CITAZIONI.PubblicazioneCitata} \rightarrow \text{PUBBLICAZIONI.Codice}$ \\
 
 \end{document}
