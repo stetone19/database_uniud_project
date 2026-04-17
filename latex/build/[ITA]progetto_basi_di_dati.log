@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.24)  26 MAR 2026 16:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.24)  17 APR 2026 23:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -221,7 +221,11 @@ LaTeX Info: Redefining \] on input line 2951.
 ) (C:\Users\stefa\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count312
-) (c:\Users\stefa\OneDrive\Desktop\Gasi di Dati\database_uniud_project\database_uniud_project\latex\build\[ITA]progetto_basi_di_dati.aux)
+) (c:\Users\stefa\OneDrive\Desktop\Gasi di Dati\database_uniud_project\database_uniud_project\latex\build\[ITA]progetto_basi_di_dati.aux
+
+LaTeX Warning: Label `fig:label_immagine' multiply defined.
+
+)
 \openout1 = `[ITA]progetto_basi_di_dati.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
@@ -327,65 +331,75 @@ Underfull \hbox (badness 10000) in alignment at lines 99--99
  []
 
 [2]
-<img/schemaERgrezzo.png, id=16, 769.6755pt x 335.45325pt>
-File: img/schemaERgrezzo.png Graphic file (type png)
-<use img/schemaERgrezzo.png>
-Package pdftex.def Info: img/schemaERgrezzo.png  used on input line 105.
-(pdftex.def)             Requested size: 364.19667pt x 158.73282pt.
-<img/schemaER1.png, id=18, 726.3135pt x 320.397pt>
-File: img/schemaER1.png Graphic file (type png)
-<use img/schemaER1.png>
-Package pdftex.def Info: img/schemaER1.png  used on input line 112.
-(pdftex.def)             Requested size: 364.19667pt x 160.66254pt.
- [3 <./img/schemaERgrezzo.png>]
-<img/schemaER2.png, id=26, 781.11826pt x 331.83975pt>
-File: img/schemaER2.png Graphic file (type png)
-<use img/schemaER2.png>
-Package pdftex.def Info: img/schemaER2.png  used on input line 119.
-(pdftex.def)             Requested size: 364.19667pt x 154.72415pt.
-<img/schemaER3.png, id=27, 654.0435pt x 310.15875pt>
-File: img/schemaER3.png Graphic file (type png)
-<use img/schemaER3.png>
-Package pdftex.def Info: img/schemaER3.png  used on input line 126.
-(pdftex.def)             Requested size: 364.19667pt x 172.70805pt.
-<img/schemaER4.png, id=28, 893.13675pt x 316.18124pt>
-File: img/schemaER4.png Graphic file (type png)
-<use img/schemaER4.png>
-Package pdftex.def Info: img/schemaER4.png  used on input line 133.
-(pdftex.def)             Requested size: 364.19667pt x 128.93076pt.
- [4 <./img/schemaER1.png> <./img/schemaER2.png> <./img/schemaER3.png>]
-Overfull \hbox (2.00914pt too wide) in paragraph at lines 148--158
+<img/SchemaERgrezzo.pdf, id=16, 791.8383pt x 394.3533pt>
+File: img/SchemaERgrezzo.pdf Graphic file (type pdf)
+<use img/SchemaERgrezzo.pdf>
+Package pdftex.def Info: img/SchemaERgrezzo.pdf  used on input line 105.
+(pdftex.def)             Requested size: 364.19667pt x 181.38065pt.
+<img/SchemaERpt1.pdf, id=17, 791.8383pt x 358.4592pt>
+File: img/SchemaERpt1.pdf Graphic file (type pdf)
+<use img/SchemaERpt1.pdf>
+Package pdftex.def Info: img/SchemaERpt1.pdf  used on input line 113.
+(pdftex.def)             Requested size: 364.19667pt x 164.87134pt.
+ [3 <./img/SchemaERgrezzo.pdf>]
+<img/SchemaERpt2.pdf, id=33, 791.8383pt x 352.43669pt>
+File: img/SchemaERpt2.pdf Graphic file (type pdf)
+<use img/SchemaERpt2.pdf>
+Package pdftex.def Info: img/SchemaERpt2.pdf  used on input line 126.
+(pdftex.def)             Requested size: 364.19667pt x 162.10133pt.
+ [4 <./img/SchemaERpt1.pdf> <./img/SchemaERpt2.pdf>]
+<img/SchemaERpt3.pdf, id=56, 791.8383pt x 392.42609pt>
+File: img/SchemaERpt3.pdf Graphic file (type pdf)
+<use img/SchemaERpt3.pdf>
+Package pdftex.def Info: img/SchemaERpt3.pdf  used on input line 144.
+(pdftex.def)             Requested size: 364.19667pt x 180.49423pt.
+<img/SchemaERpt4.pdf, id=57, 791.8383pt x 327.14218pt>
+File: img/SchemaERpt4.pdf Graphic file (type pdf)
+<use img/SchemaERpt4.pdf>
+Package pdftex.def Info: img/SchemaERpt4.pdf  used on input line 157.
+(pdftex.def)             Requested size: 364.19667pt x 150.46725pt.
+<img/SchemaERfinale.pdf, id=58, 791.8383pt x 306.18388pt>
+File: img/SchemaERfinale.pdf Graphic file (type pdf)
+<use img/SchemaERfinale.pdf>
+Package pdftex.def Info: img/SchemaERfinale.pdf  used on input line 169.
+(pdftex.def)             Requested size: 364.19667pt x 140.82759pt.
+ [5 <./img/SchemaERpt3.pdf> <./img/SchemaERpt4.pdf>]
+Overfull \hbox (2.00914pt too wide) in paragraph at lines 177--187
 \T1/cmr/m/n/12 ARTICOLI($[]$ (FK: PUB-BLI-CA-ZIO-NI.Codice),Nome, Nu-me-ro-Ri-vi-sta,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 148--158
+Underfull \hbox (badness 10000) in paragraph at lines 177--187
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 162--168
+Underfull \hbox (badness 10000) in paragraph at lines 191--197
 
  []
 
-[5 <./img/schemaER4.png>] (c:\Users\stefa\OneDrive\Desktop\Gasi di Dati\database_uniud_project\database_uniud_project\latex\build\[ITA]progetto_basi_di_dati.aux)
+[6 <./img/SchemaERfinale.pdf>] (c:\Users\stefa\OneDrive\Desktop\Gasi di Dati\database_uniud_project\database_uniud_project\latex\build\[ITA]progetto_basi_di_dati.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
+
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 5493 strings out of 467867
- 90057 string characters out of 5418334
- 519552 words of memory out of 5000000
- 34298 multiletter control sequences out of 15000+600000
- 640530 words of font info for 68 fonts, out of 8000000 for 9000
+ 5502 strings out of 467867
+ 90481 string characters out of 5418334
+ 519591 words of memory out of 5000000
+ 34306 multiletter control sequences out of 15000+600000
+ 641214 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 59i,12n,67p,485b,273s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0700.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on "c:\Users\stefa\OneDrive\Desktop\Gasi di Dati\database_uniud_project\database_uniud_project\latex\build\[ITA]progetto_basi_di_dati.pdf" (5 pages, 218818 bytes).
+ 59i,12n,67p,735b,273s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0700.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on "c:\Users\stefa\OneDrive\Desktop\Gasi di Dati\database_uniud_project\database_uniud_project\latex\build\[ITA]progetto_basi_di_dati.pdf" (6 pages, 259028 bytes).
 PDF statistics:
- 263 PDF objects out of 1000 (max. 8388607)
+ 361 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

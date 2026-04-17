@@ -102,45 +102,74 @@ Pubblica & R & 10.000 \\
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{img/schemaERgrezzo.png} % image file path
+    \includegraphics[width=0.8\textwidth]{img/SchemaERgrezzo.pdf} % image file path
     \caption{Schema ER grezzo iniziale}
     \label{fig:label_immagine}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{img/schemaER1.png} % image file path
-    \caption{Schema ER modificato dopo la prima revisione}
-    \label{fig:label_immagine2}
-\end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{img/schemaER2.png} % image file path
+    \includegraphics[width=0.8\textwidth]{img/SchemaERpt1.pdf} % image file path
+    \caption{Schema ER modificato dopo la prima revisione}
+    \label{fig:label_immagine2}
+\end{figure}
+\noindent
+\textbf{Specializzazione Rivista-Conferenza:} 
+La gerarchia è stata accorpata verso l'alto (ristrutturazione verso il padre) eliminando le entità figlie e migrandone gli attributi nell'entità genitore \textit{Articolo}. Per distinguere le occorrenze, è stato introdotto l'attributo discriminante \textit{Tipo}, i cui valori sono vincolati al dominio $\{\text{Rivista, Conferenza}\}$. 
+
+Gli attributi derivanti dalle classi figlie sono stati definiti come opzionali (cardinalità 0..1), con l'eccezione dell'attributo \textit{Nome}, che rimane obbligatorio in quanto comune a entrambe le tipologie. Si specifica, inoltre, che l'attributo \textit{AnnoConferenza} deve essere semanticamente distinto dall'attributo \textit{AnnoPubblicazione}.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/SchemaERpt2.pdf} % image file path
     \caption{Schema ER modificato dopo la seconda revisione}
     \label{fig:label_immagine3}
 \end{figure}
 
+\noindent
+\textbf{Semplificazione della Gerarchia Affiliazione:}
+La specializzazione tra l'entità \textit{Affiliazione} (padre) e le sottoclassi \textit{Università} ed \textit{Ente di Ricerca} è stata risolta mediante l'accorpamento verso il padre. Tale scelta è motivata dall'assenza di attributi specifici rilevanti nelle entità figlie. 
+
+Per preservare la semantica originale, è stato introdotto un vincolo di integrità basato sul tipo di affiliazione: l'associazione con l'entità \textit{Tesi} è valida esclusivamente per le occorrenze di tipo \textit{Università}. In termini di cardinalità, il rapporto tra \textit{Tesi} ed \textit{Affiliazione} è di $(1,1)$, mentre la partecipazione dell'entità \textit{Affiliazione} è $(0,n)$, poiché solo il sottoinsieme relativo alle università può essere associato a una tesi.
+
+\noindent
+\textbf{Semplificazione dell'attributo Indirizzo:}
+L'attributo composto \textit{Indirizzo Fisico} è stato ristrutturato mediante un processo di aggregazione dei suoi componenti (quali via, numero civico, CAP e città). Al fine di semplificare l'implementazione nel modello logico e facilitare le operazioni di inserimento, i singoli campi sono stati unificati in un unico attributo atomico di tipo stringa.
+
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{img/schemaER3.png} % image file path
+    \includegraphics[width=0.8\textwidth]{img/SchemaERpt3.pdf} % image file path
     \caption{Schema ER modificato dopo la terza revisione}
     \label{fig:label_immagine4}
 \end{figure}
 
+\noindent
+\textbf{Risoluzione della Gerarchia Pubblicazione:}
+La specializzazione tra l'entità genitore \textit{Pubblicazione} e le sottoclassi \textit{Articolo}, \textit{Libro} e \textit{Tesi} è stata risolta mantenendo le entità distinte (strategia delle entità multiple). 
+
+Per implementare correttamente il legame logico, sono state definite relazioni esplicite tra il padre e i figli tramite l'uso di chiavi esterne (\textit{foreign keys}) nelle entità figlie che referenziano la chiave primaria di \textit{Pubblicazione}. Al fine di garantire la copertura totale della specializzazione, è stato introdotto un vincolo di integrità aggiuntivo: ogni occorrenza dell'entità \textit{Pubblicazione} deve necessariamente essere referenziata come chiave esterna in almeno una delle tre entità figlie.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{img/schemaER4.png} % image file path
+    \includegraphics[width=0.8\textwidth]{img/SchemaERpt4.pdf} % image file path
     \caption{Schema ER modificato dopo la quarta revisione}
     \label{fig:label_immagine5}
 \end{figure}
 
-% % \begin{figure}[h]
-% %    \centering
-% %    \includegraphics[width=0.8\textwidth]{img/schemaERfinale4.png} % image file path
-% %    \caption{Descrizione dell'immagine}
-% %    \label{fig:label_immagine}
-% \end{figure}
+
+\noindent
+\textbf{Risoluzione del Ciclo e Vincoli di Integrità:}
+A seguito dell'analisi delle dipendenze tra le entità \textit{Autore}, \textit{Tesi} e \textit{Affiliazione}, è stato individuato un ciclo potenzialmente critico. Per garantire la coerenza dei dati, è stato introdotto un vincolo di integrità semantico: ogni \textit{Autore} che risulti associato a una \textit{Tesi} deve necessariamente possedere almeno un'affiliazione di tipo \textit{Università}. Tale vincolo assicura la validità accademica della relazione, impedendo la sottomissione di tesi da parte di autori privi della necessaria attestazione istituzionale universitaria.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/SchemaERfinale.pdf} % image file path
+    \caption{Schema ER finale senza le modifiche di dettaglio}
+    \label{fig:label_immagine}
+\end{figure}
 
 
 \section{Schema logico}
