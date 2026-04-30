@@ -12,7 +12,22 @@
 \usepackage{graphicx} % Per includere immagini (se necessario)
 \usepackage{float} % Per posizionare le figure
 \usepackage{amsmath} % Per formule matematiche
+\usepackage{listings}
+\usepackage{xcolor}
 
+% Configurazione per il codice SQL
+\lstset{
+    language=SQL,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{gray},
+    stringstyle=\color{green!50!black},
+    breaklines=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    frame=single,
+    showstringspaces=false,
+    morekeywords={HAVING,COUNT,DISTINCT,EXISTS}
+}
 \title{Progetto di Basi di Dati}
 \author{Federico Del Pup \\ Luigi Pa\textcommabelow{s}cu \\ Matteo Passador \\ Stefano Toneguzzo}
 \date{\today}
@@ -73,7 +88,7 @@ Si supponga di aver collezionato il seguente insieme di requisiti per la progett
     \item \textbf{Università:} Identificate univocamente dal nome, includono indirizzo e telefono.
 \end{itemize}
 
-\section{Tavola dei volumi}
+\section{Tavola dei volumi e Analisi delle ridondanze}
 
 \begin{tabularx}{\textwidth}{l c r}
 \toprule
@@ -97,6 +112,100 @@ Sede & R & 55.000 \\
 Pubblica & R & 10.000 \\
 \bottomrule
 \end{tabularx}
+
+\subsection{Con Ridondanza}
+
+\subsubsection*{Operazione 1}
+\begin{tabular}{llll}
+\toprule
+\textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+\midrule
+Pubblicazione & Entità & 1 & L \\
+\bottomrule
+\end{tabular}
+
+\medskip
+\textbf{Costo:} $(500 \times 1) \times 1 = 500$ unità di costo
+
+\subsubsection*{Operazione 2}
+\begin{tabular}{llll}
+\toprule
+\textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+\midrule
+Pubblicazione & Entità & 2 & S \\
+Cita          & Relazione & 1 & S \\
+Pubblicazione & Entità & 1 & L \\
+Autore        & Entità & 1 & S \\
+\bottomrule
+\end{tabular}
+
+\paragraph{Passi logici:}
+\begin{itemize}
+    \item Salvo i dati della pubblicazione
+    \item Salvo le coppie di pubblicazione e pubblicazione citata
+    \item Cerco la pubblicazione citata
+    \item Incremento di 1 il numero di citazioni a quella pubblicazione
+    \item Salvo la coppia pubblicazione autore
+\end{itemize}
+
+\textbf{Costo:} $(40 \times 4) \times 2 + (40 \times 1) \times 1 = 360$ unità
+
+\subsection{Senza Ridondanza}
+
+\subsubsection*{Operazione 1}
+\begin{tabular}{llll}
+\toprule
+\textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+\midrule
+Pubblicazione & Entità    & 1  & L \\
+Citazione     & Relazione & 20 & L \\
+\bottomrule
+\end{tabular}
+
+\paragraph{Descrizione:} 
+Stampo i dati relativi ad una pubblicazione. Per ogni pubblicazione, per calcolare il numero di citazioni dobbiamo accedere in media alla relazione ``citazione'', calcolato come: $\frac{\text{volume Citazione}}{\text{volume Pubblicazioni}} = 20$.
+
+\medskip
+\textbf{Costo:} $500 \times (20 + 1) \times 1 = 10.500$ unità di costo
+
+\subsubsection*{Operazione 2}
+\begin{tabular}{llll}
+\toprule
+\textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+\midrule
+Pubblicazione & Entità & 1 & S \\
+Cita          & Relazione & 1 & S \\
+Autore        & Entità & 1 & S \\
+\bottomrule
+\end{tabular}
+
+\paragraph{Passi logici:}
+\begin{itemize}
+    \item Salvo i dati della pubblicazione
+    \item Salvo le coppie di pubblicazione e pubblicazione citata
+    \item Salvo la coppia pubblicazione autore
+\end{itemize}
+
+\medskip
+\textbf{Costo:} $40 \times 3 \times 2 = 240$ unità di costo
+
+\subsection{Studio Comparativo}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Costo} & \textbf{Presenza di ridondanza} & \textbf{Assenza di ridondanza} \\
+\midrule
+OP1 & 500 & 10.500 \\
+OP2 & 360 & 240 \\
+\midrule
+\textbf{Totale} & \textbf{860} & \textbf{10.740} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Conclusione:} Poiché $860 < 10.740$, conviene mantenere l'attributo derivato.
 
 \section{Schema concettuale}
 
@@ -194,5 +303,126 @@ $\text{LIBRI.CodicePubblicazione} \rightarrow \text{PUBBLICAZIONI.Codice}$ \\
 $\text{TESI.CodicePubblicazione} \rightarrow \text{PUBBLICAZIONI.Codice}$ \\
 $\text{CITAZIONI.PubblicazioneChiamante} \rightarrow \text{PUBBLICAZIONI.Codice}$ \\
 $\text{CITAZIONI.PubblicazioneCitata} \rightarrow \text{PUBBLICAZIONI.Codice}$ \\
+
+\section{Operazioni e Query}
+\subsection*{Operazioni (Carico Applicativo)}
+
+\begin{enumerate}[label=\textbf{OP\arabic*}, start=1, leftmargin=1.5cm]
+    \item \textbf{Stampa delle pubblicazioni} \\
+    Frequenza: 200/500 volte al giorno.
+    
+    \item \textbf{Inserimento e Aggiornamento} \\
+    Inserire una pubblicazione (40 volte al giorno). \\
+    Aggiornamento delle citazioni di una pubblicazione (40 volte al giorno)
+
+    \item \textbf{Inserire un autore} \\
+    Frequenza: 10 volte al giorno.
+
+    \item \textbf{Modifica autore/affiliazione} \\
+    Frequenza: 1 volta al giorno (frequenza stimata).
+\end{enumerate}
+
+\subsection*{Query}
+
+\begin{enumerate}[label=\textbf{OP\arabic*}, start=5, leftmargin=1.5cm]
+    \item \textbf{Autore con più pubblicazioni per affiliazione} \\
+    Stampare il nome dell'autore che detiene il maggior numero di pubblicazioni per ogni singola affiliazione.
+    
+    \item \textbf{Co-autoria esclusiva} \\
+    Stampare le coppie di autori che hanno collaborato sempre e solo tra di loro (ovvero, ogni loro pubblicazione è stata fatta in coppia).
+    
+    \item \textbf{Autori fedeli all'affiliazione} \\
+    Stampare gli autori che non hanno mai prodotto pubblicazioni con co-autori appartenenti a un'affiliazione diversa dalla propria.
+    
+    \item \textbf{Analisi dell'impatto a breve termine} \\
+    Trovare gli autori che hanno pubblicato esclusivamente articoli i quali, a distanza di 2 anni dalla data di pubblicazione, hanno accumulato almeno 5 citazioni.
+\end{enumerate}
+
+\subsection*{OP5: Autore con più pubblicazioni per ogni affiliazione}
+\begin{lstlisting}
+SELECT a.nome, a.cognome, aa.nome_affiliazione
+FROM AUTORE a
+JOIN PUBB_AUTORE pa ON a.id = pa.id_autore
+JOIN AUTO_AFF aa ON a.id = aa.id_autore
+GROUP BY a.id, a.nome, a.cognome, aa.nome_affiliazione
+HAVING COUNT(pa.codice_pubblicazione) = (
+    SELECT MAX(cnt)
+    FROM (
+        SELECT COUNT(pa2.codice_pubblicazione) AS cnt
+        FROM AUTORE a2
+        JOIN PUBB_AUTORE pa2 ON a2.id = pa2.id_autore
+        JOIN AUTO_AFF aa2 ON a2.id = aa2.id_autore
+        WHERE aa2.nome_affiliazione = aa.nome_affiliazione
+        GROUP BY a2.id
+    ) sub
+);
+\end{lstlisting}
+
+\subsection*{OP6: Coppie che hanno pubblicato sempre e solo insieme}
+\begin{lstlisting}
+SELECT pa1.id_autore, pa2.id_autore
+FROM PUBB_AUTORE pa1
+JOIN PUBB_AUTORE pa2 
+    ON pa1.codice_pubblicazione = pa2.codice_pubblicazione 
+    AND pa1.id_autore < pa2.id_autore
+GROUP BY pa1.id_autore, pa2.id_autore
+HAVING COUNT(DISTINCT pa1.codice_pubblicazione) = (
+    SELECT COUNT(*) 
+    FROM PUBB_AUTORE pa
+    WHERE pa.id_autore = pa1.id_autore
+)
+AND COUNT(DISTINCT pa2.codice_pubblicazione) = (
+    SELECT COUNT(*) 
+    FROM PUBB_AUTORE pa
+    WHERE pa.id_autore = pa2.id_autore
+);
+\end{lstlisting}
+
+\newpage
+
+\subsection*{OP7: Autori che non hanno mai pubblicato con colleghi di altre affiliazioni}
+\textit{Un autore è valido se NON esiste nessuna pubblicazione in cui ha collaborato con un autore di affiliazione diversa.}
+\begin{lstlisting}
+SELECT a.id, a.nome, a.cognome
+FROM AUTORE a
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM PUBB_AUTORE pa1
+    JOIN PUBB_AUTORE pa2
+        ON pa1.codice_pubblicazione = pa2.codice_pubblicazione
+        AND pa1.id_autore <> pa2.id_autore
+    JOIN AUTO_AFF aa1
+        ON aa1.id_autore = pa1.id_autore
+    JOIN AUTO_AFF aa2
+        ON aa2.id_autore = pa2.id_autore
+    WHERE pa1.id_autore = a.id
+      AND aa1.nome_affiliazione <> aa2.nome_affiliazione
+);
+\end{lstlisting}
+
+\subsection*{OP8: Autori con solo articoli di successo (min. 5 citazioni a 2 anni)}
+\begin{lstlisting}
+SELECT a.id, a.nome, a.cognome
+FROM public.autore a
+-- Condizione A: L'autore deve aver pubblicato almeno un articolo
+WHERE EXISTS (
+    SELECT 1 FROM public.pubb_autore pa WHERE pa.id_autore = a.id
+)
+-- Condizione B: NON deve esistere alcuna sua pubblicazione "flop"
+AND NOT EXISTS (
+    SELECT 1
+    FROM public.pubb_autore pa
+    JOIN public.pubblicazione p ON pa.codice_pubblicazione = p.codice
+    WHERE pa.id_autore = a.id
+      AND (
+          SELECT COUNT(*)
+          FROM public.citazione c
+          JOIN public.pubblicazione pc ON c.codice_pubblicazione_citante = pc.codice
+          WHERE c.codice_pubblicazione_citata = p.codice
+            AND (pc.annopubblicazione - p.annopubblicazione) <= 2
+      ) < 5
+);
+\end{lstlisting}
+
 
 \end{document}
