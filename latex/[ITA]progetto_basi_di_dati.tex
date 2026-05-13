@@ -42,6 +42,8 @@
     \item \textbf{Tavola dei volumi} (Sezione 4)
     \item \textbf{Schema concettuale} (Sezione 5)
     \item \textbf{Schema logico} (Sezione 6)
+    \item \textbf{Operazioni e Query} (Sezione 7)
+    \item \textbf{Trigger} (Sezione 8)
 \end{itemize}
 
 \section{Glossario dei termini}
@@ -112,8 +114,14 @@ Sede & R & 55.000 \\
 Pubblica & R & 10.000 \\
 \bottomrule
 \end{tabularx}
+\medskip
+La tavola dei volumi rappresenta il passaggio fondamentale dalla progettazione concettuale a quella logica, fornendo una stima quantitativa del carico che il database dovrà sostenere. \\
+Il sistema gestisce un totale di \textbf{100.000 pubblicazioni}. Si noti come la somma delle entità figlie (\textit{Articolo su rivista, Articolo per conferenza, Libro, Tesi}) sia esattamente pari a 100.000, riflettendo la scelta di una \textbf{gerarchia a copertura totale}. Le tesi rappresentano la quota maggioritaria (55.000), coerentemente con un dominio accademico.\\
+La relazione \texttt{Citazione} è la più onerosa del sistema, con un volume stimato di \textbf{2.000.000 di record} ($100.000 \times 20$). Questa dimensione giustifica l'introduzione dell'attributo derivato \texttt{NumeroCitazioni} per ottimizzare le operazioni di sola lettura, nonostante l'aggravio nei tempi di inserimento. In seguito viene mostrata un'analisi comparativa tra le due soluzioni, evidenziando i trade-off in termini di costo computazionale per le operazioni più frequenti. \\
+Con \textbf{70.000 autori} e una media di 3,3 autori per pubblicazione (relazione \texttt{Scritto}), il sistema deve gestire circa 330.000 legami autore-opera. La relazione \texttt{Appartenenza} ($70k \times 2$) modella correttamente il turnover accademico, prevedendo che ogni autore sia mediamente affiliato a due enti diversi nel tempo.
+Il numero contenuto di \textbf{Affiliazioni (500)}, \textbf{Editori (400)} e \textbf{Università (300)} suggerisce che queste tabelle fungeranno da "anagrafiche di controllo", con un basso tasso di aggiornamento rispetto alle tabelle transazionali delle pubblicazioni e citazioni.
 
-\subsection{Con Ridondanza}
+\subsection*{Con Ridondanza dell'attributo NumeroCitazioni}
 
 \subsubsection*{Operazione 1}
 \begin{tabular}{llll}
@@ -140,17 +148,17 @@ Autore        & Entità & 1 & S \\
 \end{tabular}
 
 \paragraph{Passi logici:}
-\begin{itemize}
+\begin{enumerate}[label=\textbf{\arabic*)}, start=1, leftmargin=1.5cm]
     \item Salvo i dati della pubblicazione
     \item Salvo le coppie di pubblicazione e pubblicazione citata
     \item Cerco la pubblicazione citata
     \item Incremento di 1 il numero di citazioni a quella pubblicazione
     \item Salvo la coppia pubblicazione autore
-\end{itemize}
+\end{enumerate}
 
 \textbf{Costo:} $(40 \times 4) \times 2 + (40 \times 1) \times 1 = 360$ unità
 
-\subsection{Senza Ridondanza}
+\subsection{Senza Ridondanza dell'attributo NumeroCitazioni}
 
 \subsubsection*{Operazione 1}
 \begin{tabular}{llll}
@@ -180,11 +188,11 @@ Autore        & Entità & 1 & S \\
 \end{tabular}
 
 \paragraph{Passi logici:}
-\begin{itemize}
+\begin{enumerate}[label=\textbf{\arabic*)}, start=1, leftmargin=1.5cm]
     \item Salvo i dati della pubblicazione
     \item Salvo le coppie di pubblicazione e pubblicazione citata
     \item Salvo la coppia pubblicazione autore
-\end{itemize}
+\end{enumerate}
 
 \medskip
 \textbf{Costo:} $40 \times 3 \times 2 = 240$ unità di costo
@@ -423,6 +431,23 @@ AND NOT EXISTS (
       ) < 5
 );
 \end{lstlisting}
+
+\paragraph{Nota sull'inefficacia dell'attributo derivato nella query OP8:}
+Nonostante la presenza dell'attributo derivato \texttt{NumeroCitazioni} nell'entità \textbf{PUBBLICAZIONE} --- introdotto per ottimizzare la stampa dei dati generali (\textit{OP1}) --- esso risulta inutilizzabile ai fini della query \textbf{OP8} (\textit{Analisi dell'impatto a breve termine}).
+
+Il limite risiede nella natura stessa dell'attributo ridondante:
+\begin{itemize}
+    \item \textbf{Staticità del dato:} L'attributo memorizza esclusivamente il conteggio totale e cumulativo delle citazioni ricevute fino all'istante attuale.
+    \item \textbf{Vincolo Temporale Dinamico:} La specifica della \textit{OP8} richiede il filtraggio delle sole citazioni avvenute entro un arco temporale di \textbf{due anni} dalla data di rilascio della pubblicazione.
+\end{itemize}
+
+Di conseguenza, per soddisfare il requisito, è necessario ignorare il valore pre-calcolato ed effettuare un calcolo dinamico accedendo direttamente alla relazione \texttt{CITAZIONI}. Questo processo permette di confrontare gli attributi \texttt{Anno} della pubblicazione citante e di quella citata, operazione indispensabile per isolare il sottoinsieme di riferimenti bibliografici pertinenti all'analisi richiesta.
+
+\section{Trigger}
+\subsection*{Trigger per l'aggiornamento del numero di citazioni}
+\textbf{Non Autocitazione}: Una pubblicazione non può citare sé stessa. Questo è il vincolo più elementare e serve a prevenire l'inserimento di dati logicamente inconsistenti, garantendo che il conteggio delle citazioni rifletta solo i riferimenti esterni.\\
+\textbf{Non Citazione Circolare}: Una pubblicazione A non può citare una pubblicazione B se B cita già A, direttamente o indirettamente. Questo vincolo impedisce la formazione di cicli di citazione che potrebbero distorcere il conteggio delle citazioni e complicare l'analisi bibliometrica.\\
+\textbf{Nota sul Vincolo Temporale}: Una pubblicazione non può citare un'altra pubblicazione con un anno di pubblicazione successivo. Pur riconoscendo l'esistenza di casi come i preprint nel mondo reale, per coerenza logica del modello e per semplicità, questo vincolo è assunto come rilevante e implementato nel database.\\
 
 
 \end{document}

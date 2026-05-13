@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.24)  30 APR 2026 18:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.24)  13 MAY 2026 22:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -349,70 +349,74 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 \c@lstlisting=\count327
 
-Underfull \hbox (badness 2111) in paragraph at lines 63--63
+Underfull \hbox (badness 2111) in paragraph at lines 65--65
 []|\T1/cmr/m/n/12 Luogo di di-scus-sio-ne del-la
  []
 
 [1
 
 {C:/Users/stefa/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-Underfull \hbox (badness 10000) in alignment at lines 114--114
+Underfull \hbox (badness 10000) in alignment at lines 116--116
 [][][] 
  []
 
-[2] [3]
-<img/SchemaERgrezzo.pdf, id=22, 791.8383pt x 394.3533pt>
+[2] [3] [4]
+<img/SchemaERgrezzo.pdf, id=28, 791.8383pt x 394.3533pt>
 File: img/SchemaERgrezzo.pdf Graphic file (type pdf)
 <use img/SchemaERgrezzo.pdf>
-Package pdftex.def Info: img/SchemaERgrezzo.pdf  used on input line 214.
+Package pdftex.def Info: img/SchemaERgrezzo.pdf  used on input line 222.
 (pdftex.def)             Requested size: 364.19667pt x 181.38065pt.
- [4]
-<img/SchemaERpt1.pdf, id=27, 791.8383pt x 358.4592pt>
+<img/SchemaERpt1.pdf, id=29, 791.8383pt x 358.4592pt>
 File: img/SchemaERpt1.pdf Graphic file (type pdf)
 <use img/SchemaERpt1.pdf>
-Package pdftex.def Info: img/SchemaERpt1.pdf  used on input line 222.
+Package pdftex.def Info: img/SchemaERpt1.pdf  used on input line 230.
 (pdftex.def)             Requested size: 364.19667pt x 164.87134pt.
-<img/SchemaERpt2.pdf, id=28, 791.8383pt x 352.43669pt>
+ [5 <./img/SchemaERgrezzo.pdf> <./img/SchemaERpt1.pdf>]
+<img/SchemaERpt2.pdf, id=51, 791.8383pt x 352.43669pt>
 File: img/SchemaERpt2.pdf Graphic file (type pdf)
 <use img/SchemaERpt2.pdf>
-Package pdftex.def Info: img/SchemaERpt2.pdf  used on input line 235.
+Package pdftex.def Info: img/SchemaERpt2.pdf  used on input line 243.
 (pdftex.def)             Requested size: 364.19667pt x 162.10133pt.
- [5 <./img/SchemaERgrezzo.pdf> <./img/SchemaERpt1.pdf>]
-<img/SchemaERpt3.pdf, id=51, 791.8383pt x 392.42609pt>
+<img/SchemaERpt3.pdf, id=52, 791.8383pt x 392.42609pt>
 File: img/SchemaERpt3.pdf Graphic file (type pdf)
 <use img/SchemaERpt3.pdf>
-Package pdftex.def Info: img/SchemaERpt3.pdf  used on input line 253.
+Package pdftex.def Info: img/SchemaERpt3.pdf  used on input line 261.
 (pdftex.def)             Requested size: 364.19667pt x 180.49423pt.
  [6 <./img/SchemaERpt2.pdf> <./img/SchemaERpt3.pdf>]
-<img/SchemaERpt4.pdf, id=73, 791.8383pt x 327.14218pt>
+<img/SchemaERpt4.pdf, id=74, 791.8383pt x 327.14218pt>
 File: img/SchemaERpt4.pdf Graphic file (type pdf)
 <use img/SchemaERpt4.pdf>
-Package pdftex.def Info: img/SchemaERpt4.pdf  used on input line 266.
+Package pdftex.def Info: img/SchemaERpt4.pdf  used on input line 274.
 (pdftex.def)             Requested size: 364.19667pt x 150.46725pt.
-<img/SchemaERfinale.pdf, id=74, 791.8383pt x 306.18388pt>
+<img/SchemaERfinale.pdf, id=75, 791.8383pt x 306.18388pt>
 File: img/SchemaERfinale.pdf Graphic file (type pdf)
 <use img/SchemaERfinale.pdf>
-Package pdftex.def Info: img/SchemaERfinale.pdf  used on input line 278.
+Package pdftex.def Info: img/SchemaERfinale.pdf  used on input line 286.
 (pdftex.def)             Requested size: 364.19667pt x 140.82759pt.
 
-Overfull \hbox (2.00914pt too wide) in paragraph at lines 286--296
+Overfull \hbox (2.00914pt too wide) in paragraph at lines 294--304
 \T1/cmr/m/n/12 ARTICOLI($[]$ (FK: PUB-BLI-CA-ZIO-NI.Codice),Nome, Nu-me-ro-Ri-vi-sta,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 286--296
+Underfull \hbox (badness 10000) in paragraph at lines 294--304
 
  []
 
 [7 <./img/SchemaERpt4.pdf> <./img/SchemaERfinale.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 300--306
+Underfull \hbox (badness 10000) in paragraph at lines 308--314
 
  []
 
 [8]
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 343.
- [9] [10] (c:\Users\stefa\OneDrive\Desktop\Gasi di Dati\database_uniud_project\database_uniud_project\latex\build\[ITA]progetto_basi_di_dati.aux)
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 351.
+ [9] [10]
+Underfull \hbox (badness 10000) in paragraph at lines 448--451
+
+ []
+
+[11] (c:\Users\stefa\OneDrive\Desktop\Gasi di Dati\database_uniud_project\database_uniud_project\latex\build\[ITA]progetto_basi_di_dati.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -429,11 +433,11 @@ Here is how much of TeX's memory you used:
  36197 multiletter control sequences out of 15000+600000
  642981 words of font info for 75 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,12n,65p,735b,1407s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0700.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on "c:\Users\stefa\OneDrive\Desktop\Gasi di Dati\database_uniud_project\database_uniud_project\latex\build\[ITA]progetto_basi_di_dati.pdf" (10 pages, 322880 bytes).
+ 57i,12n,65p,735b,1406s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0700.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\stefa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/stefa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on "c:\Users\stefa\OneDrive\Desktop\Gasi di Dati\database_uniud_project\database_uniud_project\latex\build\[ITA]progetto_basi_di_dati.pdf" (11 pages, 341767 bytes).
 PDF statistics:
- 513 PDF objects out of 1000 (max. 8388607)
+ 563 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
