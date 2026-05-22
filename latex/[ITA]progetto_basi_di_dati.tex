@@ -772,6 +772,16 @@ SELECT codice, ((codice + 1) % 70) + 1 FROM public.pubblicazione;
 
 INSERT INTO public.citazione (pubblicazioneCitante, pubblicazioneCitata)
 SELECT codice, ((codice + 2) % 70) + 1 FROM public.pubblicazione;
+
+
+--- 11. Aggiornamento del numero di citazioni in pubblicazione (ncitazioni) per coerenza con la tabella citazione
+UPDATE pubblicazioni p
+SET ncitazioni = (
+    SELECT COUNT(*)
+    FROM citazioni c
+    WHERE c.pubblicazioneCitata = p.codice
+);
+
 \end{lstlisting}
 
 Le tabelle risultanti sono di conseguenza così:
