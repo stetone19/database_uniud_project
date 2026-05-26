@@ -38,35 +38,7 @@
 
 \begin{document}
 
-\maketitle
-\section{Indice}
-\begin{enumerate}
-    \item Analisi dei requisiti
-    \begin{itemize}
-        \item \ref{sec:introduzione}Introduzione alla richiesta
-        \item \ref{sec:glossario} Glossario dei termini
-        \item \ref{sec:strutturazione} Strutturazione dei requisiti
-    \end{itemize}
-    \item \ref{sec:progettazione-concettuale} Progettazione concettuale
-    \begin{itemize}
-        \item \ref{subsec:pubblicazione} Gestione dell'entità Pubblicazione e delle sue specializzazioni
-        \item \ref{subsec:affiliazione} Gestione dell'entità Affiliazione e delle sue specializzazioni
-        \item \ref{subsec:integrazione} Integrazione dei componenti e schema finale
-    \end{itemize}
-    \item \ref{sec:progettazione-logica} Progettazione logica
-    \begin{itemize}
-        \item \ref{subsec:tavola-volumi} Tavola dei volumi
-        \item \ref{subsec:analisi-ridondanze} Analisi delle ridondanze
-        \item \ref{subsec:ristrutturazione-schema} Ristrutturazione dello schema ER
-    \end{itemize}
-    \item \ref{sec:progettazione-fisica} Progettazione fisica
-    \begin{itemize}
-        \item \ref{subsec:schema-relazionale} Schema relazionale
-        \item \ref{subsec:trigger-citazioni} Definizione di trigger per l'aggiornamento del numero di citazioni
-    \end{itemize}
-    \item \ref{sec:query} Query
-    \item \ref{sec:conclusioni} Conclusioni
-\end{enumerate}
+\tableofcontents
 
 \section{Analisi dei requisiti}
 \label{sec:introduzione}
@@ -400,7 +372,9 @@ Il DB è stato implementato utilizzando il sistema di gestione di database relaz
 Di seguito viene presentata la sintassi SQL utilizzata per creare le tabelle del database, in Data Definition Language (DDL). La definizione delle tabelle include la specifica delle chiavi primarie, chiavi esterne e vincoli di integrità per garantire la coerenza dei dati e il rispetto delle relazioni logiche tra le entità.
 
 \begin{lstlisting}
-    CREATE TABLE public.affiliazioni
+
+-- Tabella Affiliazioni
+CREATE TABLE public.affiliazioni
 (
     nome varchar(100) NOT NULL,
     telefono varchar(100) NOT NULL,
@@ -409,6 +383,7 @@ Di seguito viene presentata la sintassi SQL utilizzata per creare le tabelle del
     CONSTRAINT affiliazione_pkey PRIMARY KEY (nome)
 )
 
+-- Tabella Pubblicazioni
 CREATE TABLE IF NOT EXISTS public.articoli
 (
     CodicePubblicazione integer NOT NULL,
@@ -420,26 +395,28 @@ CREATE TABLE IF NOT EXISTS public.articoli
     annoConferenza integer,
     CONSTRAINT articolo_pkey PRIMARY KEY (CodicePubblicazione ),
     CONSTRAINT articolo_codice_pubblicazione_fkey FOREIGN KEY (CodicePubblicazione )
-    REFERENCES public.pubblicazioni (codice) MATCH SIMPLE
+        REFERENCES public.pubblicazioni (codice) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 )
 
+-- Tabella AutoreAffiliazione
 CREATE TABLE public.autoreaffiliazione
 (
     idAutore integer NOT NULL,
     nomeAffiliazione varchar(255) NOT NULL,
-    CONSTRAINT auto_aff_pkey PRIMARY KEY (id_autore, nome_affiliazione),
-    CONSTRAINT auto_aff_id_autore_fkey FOREIGN KEY (id_autore)
+    CONSTRAINT auto_aff_pkey PRIMARY KEY (idautore, nomeaffiliazione),
+    CONSTRAINT auto_aff_id_autore_fkey FOREIGN KEY (idautore)
         REFERENCES public.autori (id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    CONSTRAINT auto_aff_nome_affiliazione_fkey FOREIGN KEY (nome_affiliazione)
+    CONSTRAINT auto_aff_nome_affiliazione_fkey FOREIGN KEY (nomeaffiliazione)
         REFERENCES public.affiliazioni (nome) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
 )
 
+-- Tabella Autori
 CREATE TABLE public.autori
 (
     id SERIAL NOT NULL,
@@ -451,6 +428,7 @@ CREATE TABLE public.autori
 )
 
 
+-- Tabella Citazioni
 CREATE TABLE public.citazioni
 (
     pubblicazioneCitante integer NOT NULL,
@@ -466,6 +444,7 @@ CREATE TABLE public.citazioni
         ON DELETE CASCADE
 )
 
+-- Tabella Editori
 CREATE TABLE public.editori
 (
     nome varchar(100) NOT NULL,
@@ -473,6 +452,7 @@ CREATE TABLE public.editori
     CONSTRAINT editore_pkey PRIMARY KEY (nome)
 )
 
+-- Tabella Libri
 CREATE TABLE public.libri
 (
     CodicePubblicazione integer NOT NULL,
@@ -489,6 +469,7 @@ CREATE TABLE public.libri
         ON DELETE NO ACTION
 );
 
+-- Tabella PubblicazioneAutore
 CREATE TABLE public.pubblicazioneautore
 (
     CodicePubblicazione integer NOT NULL,
@@ -504,6 +485,7 @@ CREATE TABLE public.pubblicazioneautore
         ON DELETE CASCADE
 );
 
+-- Tabella Pubblicazioni
 CREATE TABLE public.pubblicazioni
 (
     codice SERIAL NOT NULL,
@@ -514,6 +496,7 @@ CREATE TABLE public.pubblicazioni
     CONSTRAINT pubblicazione_pkey PRIMARY KEY (codice)
 )
 
+-- Tabella Tesi
 CREATE TABLE public.tesi
 (
     CodicePubblicazione integer NOT NULL,
@@ -529,11 +512,16 @@ CREATE TABLE public.tesi
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
+
 \end{lstlisting}
 
 \subsection{Popolamento del database} \label{subsec:popolamento}
-
-Per popolare il database con dati di esempio, sono stati creati script SQL che inseriscono record nelle tabelle in modo coerente con le relazioni e i vincoli definiti nello schema logico. I dati di esempio sono stati generati in modo da riflettere scenari realistici nel contesto accademico, includendo una varietà di pubblicazioni, autori, affiliazioni e citazioni. Abbiamo scelto come contesto regionale l'area del Triveneto, che comprende le regioni del Veneto, Friuli-Venezia Giulia e Trentino-Alto Adige. Questo contesto è stato selezionato per la sua ricca attività accademica e di ricerca, che offre un'ampia gamma di dati per testare le funzionalità del database. Inoltre è coerente con i volumi stimati nella tavola dei volumi, in quanto si tratta di un contesto regionale che presenta una significativa attività accademica e di pubblicazione scientifica. \\ Ecco un esempio di tabella risultante dal popolamento del database:
+In questa fase viene effettuato l'inserimento dei dati strutturati all'interno del nostro database. Per ottimizzare i tempi il processo è stato implementato con prompt di intelligenza artificiale, che ha permesso di generare record di dati coerenti e rappresentativi del dominio accademico regionale, riducendo drasticamente i tempi di data entry manuale e minimizzando il rischio di errori di sintassi.
+\\Per l'estrazione e la formattazione dei dati è stato utilizzato \textbf{Gemini 3.1 Pro}.
+La popolazione delle tabelle è stata delimitata alla zona del Triveneto (\textit{Veneto}, \textit{Trentino-Alto Adige}, \textit{Friuli-Venezia Giulia}).
+\\Questa scelta strategica è stata dettata da un fattore chiave: il Triveneto vanta una solida e storica presenza di numerose attività, atenei e centri di ricerca d'eccellenza.
+Concentrare il raggio d'azione su questo territorio ha permesso di testare l'efficacia del prompt e la solidità dell'architettura del database su un set di dati conforme ai volumi stimati nella tavola dei volumi.
+\\ Ecco un esempio di tabella risultante dal popolamento del database:
 
 % ============================================================
 % AFFILIAZIONE
@@ -567,7 +555,7 @@ CRO Aviano                        & 0434-659111 & Via Franco Gallini 2, Aviano  
 \textbf{Non Citazione Circolare}: Una pubblicazione A non può citare una pubblicazione B se B cita già A, direttamente o indirettamente. Questo vincolo impedisce la formazione di cicli di citazione che potrebbero distorcere il conteggio delle citazioni e complicare l'analisi bibliometrica.\\
 \textbf{Nota sul Vincolo Temporale}: Una pubblicazione non può citare un'altra pubblicazione con un anno di pubblicazione successivo. Pur riconoscendo l'esistenza di casi come i preprint nel mondo reale questo vincolo è assunto logicamente come rilevante ed è implementato nel database.\\
 
-\subsubsection*{Trigger per l'incremento del numero di citazioni}
+\subsubsection{Trigger per l'incremento del numero di citazioni}
 Il trigger \texttt{inc\_n\_citazioni} è progettato per gestire l'incremento del numero di citazioni di una pubblicazione ogni volta che viene inserita una nuova citazione che la riguarda. Il trigger esegue le seguenti operazioni:
 1. Verifica che la pubblicazione citante non sia la stessa della pubblicazione citata, prevenendo così l'autocitazione.
 2. Controlla che la pubblicazione citante non stia citando una pubblicazione
@@ -575,109 +563,102 @@ con un anno di pubblicazione successivo, garantendo la coerenza temporale delle 
 3. Se i controlli sono superati, il trigger incrementa il numero di citazioni
 della pubblicazione citata, aggiornando così l'attributo derivato \textbf{NumeroCitazioni} in modo accurato e tempestivo.\\
 \begin{lstlisting}
---1)modifica num di citazioni
---Aggiunta del num di citazioni
---PRIMA O DOPO L'INSERIMENTO???
+-- 1. TRIGGER PER L'INSERIMENTO (Incremento e Controlli)
 CREATE OR REPLACE FUNCTION inc_n_citazioni()
     RETURNS TRIGGER LANGUAGE plpgsql AS $$
     DECLARE
-        n integer;
-        Anno_citante integer;
-        Anno_citata integer;
+        v_anno_citante integer;
+        v_anno_citata integer;
     BEGIN
-        SELECT Anno INTO Anno_citante
-        FROM PUBBLICAZIONI
-        WHERE Codice = NEW.PubblicazioneCitante;
-
-        SELECT Anno, NumeroCitazioni INTO Anno_citata, n
-        FROM PUBBLICAZIONI
-        WHERE Codice = NEW.PubblicazioneCitata;
-
-        IF NEW.PubblicazioneCitante = NEW.PubblicazioneCitata THEN
+        -- Controllo auto-citazione immediato
+        IF NEW.pubblicazioneCitante = NEW.pubblicazioneCitata THEN
             RAISE EXCEPTION 'Una pubblicazione non si può citare da sola';
         END IF;
-        IF Anno_citante < Anno_citata THEN
+
+        -- Recupero gli anni di pubblicazione (usando i nomi corretti dello schema)
+        SELECT annopubblicazione INTO v_anno_citante 
+        FROM public.pubblicazioni 
+        WHERE codice = NEW.PubblicazioneCitante;
+
+        SELECT annopubblicazione INTO v_anno_citata 
+        FROM public.pubblicazioni 
+        WHERE codice = NEW.PubblicazioneCitata;
+
+        -- Controllo temporale
+        IF v_anno_citante < v_anno_citata THEN
             RAISE EXCEPTION 'Una pubblicazione può citare solo pubblicazioni contemporanee o più vecchie';
-        ELSE
-            IF n = 0 THEN
-                UPDATE PUBBLICAZIONI
-                SET NumeroCitazioni = 1
-                WHERE Codice = NEW.PubblicazioneCitata;
-            ELSE
-                UPDATE PUBBLICAZIONI
-                SET NumeroCitazioni = n+1
-                WHERE Codice = NEW.PubblicazioneCitata;
-            END IF;
-            RETURN NEW;
         END IF;
+
+        -- Aggiornamento diretto (molto più efficiente)
+        UPDATE public.pubblicazioni
+        SET ncitazioni = ncitazioni + 1
+        WHERE codice = NEW.PubblicazioneCitata;
+
+        RETURN NEW;
     END;
 $$;
---SELECT count(*) INTO n
---			FROM CITAZIONE
---			WHERE EXISTS(SELECT * FROM PUBBLICAZIONE WHERE NEW.codice_pubblicazione_citata = codice) AND NEW.codice_pubblicazione_citata = codice_pubblicazione_citata;
 
+CREATE TRIGGER trg_ins_CIT
+BEFORE INSERT ON public.citazioni
+FOR EACH ROW EXECUTE FUNCTION inc_n_citazioni();
+
+---
 
 \end{lstlisting}
-\subsection{Trigger per la rimozione del numero di citazioni}
+\subsubsection{Trigger per la rimozione del numero di citazioni}
 
 \begin{lstlisting}
---Rimozione del num di citazioni
-CREATE OR REPLACE FUNCTION dec_n_citazioni()
-    RETURNS TRIGGER
-    LANGUAGE plpgsql AS $$
-    DECLARE
-        n integer;
-    BEGIN
-        SELECT NumeroCitazioni INTO n
-        FROM PUBBLICAZIONI
-        WHERE Codice = OLD.PubblicazioneCitata;
+CREATE TRIGGER trg_ins_CIT
+BEFORE INSERT ON public.citazioni
+FOR EACH ROW EXECUTE FUNCTION inc_n_citazioni();
 
-        IF NOT FOUND THEN
-            RETURN NULL;
-        ELSE
-            UPDATE PUBBLICAZIONI
-            SET NumeroCitazioni = n-1
-            WHERE Codice = OLD.PubblicazioneCitata;
-        END IF;
+---
+
+-- 2. TRIGGER PER LA CANCELLAZIONE (Decremento)
+CREATE OR REPLACE FUNCTION dec_n_citazioni()
+    RETURNS TRIGGER LANGUAGE plpgsql AS $$
+    BEGIN
+        -- Aggiornamento diretto senza bisogno di SELECT preventiva
+        UPDATE public.pubblicazioni
+        SET ncitazioni = ncitazioni - 1
+        WHERE codice = OLD.PubblicazioneCitata;
+        
         RETURN OLD;
     END;
 $$;
-\end{lstlisting}
-\subsubsection*{Trigger per l'update delle citazioni}
-Il trigger controlla che una pubblicazione non si citi da sola e gestisce l'attributo derivato \textbf{NumeroCitazioni}
-\begin{lstlisting}
---Update citazioni, controlla che non si citi da sola e gestisce il campo derivato
---HA SENSO???
-CREATE or REPLACE FUNCTION updt_citazioni()
-	RETURNS trigger LANGUAGE plpgsql AS $$
-	BEGIN
-		RAISE EXCEPTION 'Una citazione non puo' essere aggiornata si consiglia di aggiungerne una nuova ed eliminare la vecchia';
-	END;
-$$;
 
-CREATE or REPLACE TRIGGER trg_ins_CIT
-BEFORE INSERT ON CITAZIONI
-FOR EACH ROW EXECUTE FUNCTION inc_n_citazioni();
-
-CREATE or REPLACE TRIGGER trg_dec_CIT
-BEFORE DELETE ON CITAZIONI
+CREATE TRIGGER trg_dec_CIT
+BEFORE DELETE ON public.citazioni
 FOR EACH ROW EXECUTE FUNCTION dec_n_citazioni();
 
-CREATE or REPLACE TRIGGER trg_upd_CIT
-BEFORE UPDATE ON CITAZIONI
+---
+\end{lstlisting}
+\subsubsection{Trigger per l'update delle citazioni}
+Il trigger controlla che una pubblicazione non si citi da sola e gestisce l'attributo derivato \textbf{NumeroCitazioni}
+\begin{lstlisting}
+-- 3. TRIGGER PER BLOCCARE L'UPDATE
+CREATE OR REPLACE FUNCTION updt_citazioni()
+    RETURNS TRIGGER LANGUAGE plpgsql AS $$
+    BEGIN
+        RAISE EXCEPTION 'Una citazione non può essere aggiornata. Elimina la vecchia e inseriscine una nuova.';
+    END;
+$$;
+
+CREATE TRIGGER trg_upd_CIT
+BEFORE UPDATE ON public.citazioni
 FOR EACH ROW EXECUTE FUNCTION updt_citazioni();
 \end{lstlisting}
-\subsubsection*{Trigger per il controllo dell'affiliazione universitaria nelle tesi}
+\subsubsection{Trigger per il controllo dell'affiliazione universitaria nelle tesi}
 Il trigger \texttt{trg\_TESI} è progettato per garantire che ogni tesi inserita nel database sia associata a un'affiliazione di tipo "Università" e che questa affiliazione sia effettivamente collegata ad almeno uno degli autori della tesi. Questo controllo è fondamentale per mantenere l'integrità dei dati e assicurare che le tesi siano correttamente categorizzate all'interno del contesto accademico.\\
 Il trigger esegue le seguenti verifiche:
-1. Controlla che il codice della pubblicazione associato alla tesi non sia già
-utilizzato in altre pubblicazioni (articoli o libri), prevenendo così duplicazioni.
-2. Verifica che l'affiliazione selezionata per la tesi sia effettivamente un'università presente nel database.
-3. Assicura che l'affiliazione universitaria sia collegata ad almeno uno degli autori della tesi, garantendo così la coerenza tra l'affiliazione e i contributori della pubblicazione.\\
+\begin{enumerate}[label=\textbf{\arabic*}), leftmargin=1.5cm]
+    \item Controlla che il codice della pubblicazione associato alla tesi non sia già utilizzato in altre pubblicazioni (articoli o libri), prevenendo così duplicazioni.
+    \item Verifica che l'affiliazione selezionata per la tesi sia effettivamente un'università presente nel database.
+    \item Assicura che l'affiliazione universitaria sia collegata ad almeno uno degli autori della tesi, garantendo così la coerenza tra l'affiliazione e i contributori della pubblicazione.
+\end{enumerate}
+
 \begin{lstlisting}
-    --3)Check dell'uni come affiliazione
---Prima inserimento effettivo TESI, controllo che l'affiliazione selezionata sia un'università
-CREATE OR REPLACE FUNCTION check_uni()
+ CREATE OR REPLACE FUNCTION check_uni()
     RETURNS TRIGGER
     LANGUAGE plpgsql AS 
     $$
@@ -688,24 +669,30 @@ CREATE OR REPLACE FUNCTION check_uni()
         RETURN NULL;
     END IF;
     
-    IF NOT EXISTS(SELECT Nome FROM AFFILIAZIONI WHERE NEW.NomeAffiliazione = Nome AND Tipo = 'Università') THEN
+    IF NOT EXISTS(SELECT nome FROM AFFILIAZIONI WHERE NEW.nomeAffiliazione = nome AND tipo = 'Università') THEN
         RAISE EXCEPTION 'Università inserita non corretta o non presente nel db';
     END IF;
     
-    IF NEW.NomeAffiliazione NOT IN(SELECT AA.NomeAffiliazione
-                                FROM PUBBLICAZIONEAUTORE PA, AUTOREAFFILIAZIONE AA
-                                WHERE PA.CodicePubblicazione = NEW.CodicePubblicazione AND AA.IDAutore = PA.IDAutore) THEN
+    IF NEW.nomeAffiliazione NOT IN(SELECT AA.nomeAffiliazione
+                                   FROM PUBBLICAZIONEAUTORE PA, AUTOREAFFILIAZIONE AA
+                                   WHERE PA.CodicePubblicazione = NEW.CodicePubblicazione AND AA.idAutore = PA.idAutore) THEN
         RAISE EXCEPTION 'Università inserita non è affiliata neanche ad un autore';
     END IF;
-        RETURN NEW;
+        
+    RETURN NEW;
 END;
 $$;
 
-CREATE or REPLACE TRIGGER trg_TESI
+CREATE OR REPLACE TRIGGER trg_TESI
 BEFORE INSERT OR UPDATE ON TESI
 FOR EACH ROW EXECUTE FUNCTION check_uni();
 \end{lstlisting}
-
+\subsubsection{Implementazione di trigger esterni alla richiesta}
+Per garantire l'integrità dei dati all'interno del database, sono stati implementati altri trigger esclusi dalla richiesta:
+\begin{itemize}
+    \item Vincoli di Esclusività (Generalizzazione): Nella gestione delle entità \texttt{Articolo} e \texttt{Libro}, è stato predisposto un trigger che verifica l'unicità del codice di pubblicazione, accertandosi che un record inserito in una tabella non sia già presente nell'altra. Analogamente, per la tabella \texttt{Articolo}, un apposito trigger controlla la mutua esclusività degli attributi in base alla tipologia: se l'articolo è di tipo \texttt{Conferenza}, viene vincolato l'inserimento dei soli attributi specifici per le conferenze, e viceversa per la tipologia \texttt{Rivista}.
+    \item Integrità Referenziale Complessa: Nelle tabelle di associazione \texttt{PubblicazioneAutore} e \texttt{AutoreAffiliazione}, sono stati inseriti dei trigger di controllo per verificare la corretta esistenza e corrispondenza delle rispettive chiavi esterne prima di consentire qualsiasi operazione di inserimento o modifica.
+\end{itemize}
 \section{Query} \label{sec:query}
 Di seguito vengono presentate le query SQL per rispondere alle domande specifiche richieste
 
