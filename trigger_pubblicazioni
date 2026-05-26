@@ -1,0 +1,83 @@
+--1)modifica num di citazioni
+--Aggiunta del num di citazioni
+--PRIMA O DOPO L'INSERIMENTO???
+CREATE OR REPLACE FUNCTION inc_n_citazioni()
+    RETURNS TRIGGER LANGUAGE plpgsql AS $$
+    DECLARE
+        n integer;
+        Anno_citante integer;
+        Anno_citata integer;
+    BEGIN
+        SELECT Anno INTO Anno_citante
+        FROM PUBBLICAZIONI
+        WHERE Codice = NEW.PubblicazioneCitante;
+
+        SELECT Anno, NumeroCitazioni INTO Anno_citata, n
+        FROM PUBBLICAZIONI
+        WHERE Codice = NEW.PubblicazioneCitata;
+
+        IF NEW.PubblicazioneCitante = NEW.PubblicazioneCitata THEN
+            RAISE EXCEPTION 'Una pubblicazione non si può citare da sola';
+        END IF;
+        IF Anno_citante < Anno_citata THEN
+            RAISE EXCEPTION 'Una pubblicazione può citare solo pubblicazioni contemporanee o più vecchie';
+        ELSE
+            IF n = 0 THEN
+                UPDATE PUBBLICAZIONI
+                SET NumeroCitazioni = 1
+                WHERE Codice = NEW.PubblicazioneCitata;
+            ELSE
+                UPDATE PUBBLICAZIONI
+                SET NumeroCitazioni = n+1
+                WHERE Codice = NEW.PubblicazioneCitata;
+            END IF;
+            RETURN NEW;
+        END IF;
+    END;
+$$;
+--SELECT count(*) INTO n
+--			FROM CITAZIONE
+--			WHERE EXISTS(SELECT * FROM PUBBLICAZIONE WHERE NEW.codice_pubblicazione_citata = codice) AND NEW.codice_pubblicazione_citata = codice_pubblicazione_citata;
+
+--Rimozione del num di citazioni
+CREATE OR REPLACE FUNCTION dec_n_citazioni()
+    RETURNS TRIGGER
+    LANGUAGE plpgsql AS $$
+    DECLARE
+        n integer;
+    BEGIN
+        SELECT NumeroCitazioni INTO n
+        FROM PUBBLICAZIONI
+        WHERE Codice = OLD.PubblicazioneCitata;
+
+        IF NOT FOUND THEN
+            RETURN NULL;
+        ELSE
+            UPDATE PUBBLICAZIONI
+            SET NumeroCitazioni = n-1
+            WHERE Codice = OLD.PubblicazioneCitata;
+        END IF;
+        RETURN OLD;
+    END;
+$$;
+
+--Update citazioni, controlla che non si citi da sola e gestisce il campo derivato
+--HA SENSO???
+CREATE or REPLACE FUNCTION updt_citazioni()
+	RETURNS trigger LANGUAGE plpgsql AS $$
+	BEGIN
+		RAISE EXCEPTION 'Una citazione non può essere aggiornata si consiglia di aggiungerne una nuova ed eliminare la vecchia';
+	END;
+$$;
+
+CREATE or REPLACE TRIGGER trg_ins_CIT
+BEFORE INSERT ON CITAZIONI
+FOR EACH ROW EXECUTE FUNCTION inc_n_citazioni();
+
+CREATE or REPLACE TRIGGER trg_dec_CIT
+BEFORE DELETE ON CITAZIONI
+FOR EACH ROW EXECUTE FUNCTION dec_n_citazioni();
+
+CREATE or REPLACE TRIGGER trg_upd_CIT
+BEFORE UPDATE ON CITAZIONI
+FOR EACH ROW EXECUTE FUNCTION updt_citazioni();
