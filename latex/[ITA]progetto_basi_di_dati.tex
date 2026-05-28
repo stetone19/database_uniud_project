@@ -658,6 +658,23 @@ Pubbl. Citante: 1001 (2024)\newline Pubbl. Citata: 1003 (2026) &
 \end{tabularx}
 \end{table}
 
+\subsubsection*{Nota sulle citazioni circolari fra pubblicazioni dello stesso anno}
+Il vincolo di non ciclicità presenta una zona grigia specifica al di fuori di questo trigger: le pubblicazioni dello stesso anno. Il controllo temporale impone che una pubblicazione citi solo opere con anno minore o uguale al proprio. Questo di per sè eliminerebbe già tutti i cicli temporali, perchè richiedererebbe che ogni pubblicazione citi la successiva. 
+\\ Tuttavia, se per esempio, tre pubblicazioni sono state pubblicate nello stesso anno, potrebbero citarsi reciprocamente senza violare il vincolo temporale. In questo caso, il vincolo di non citazione circolare non è applicabile, poichè il confronto fra citazioni è sempre soddisfatto. Di seguito un'illustrazione
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/Circolare.pdf} % image file path
+    \caption{Esempio di citazioni circolari fra pubblicazioni dello stesso anno.}
+    \label{fig:citazioni_circolari}
+\end{figure}
+Per gesitre questo caso, sono stati valutati tre strategie opposte:
+\\ \textbf{Strategia 1: Non gestire i cicli intra-anno}
+\\Questa è la strategia più conservativa, che accetta la possibilità di citazioni circolari all'interno dello stesso anno. Questa strategia si giustifica perché evita la sovraccaricazione della base di dati con un ulteriore operazione complessa dal punto di vista del costo temporale. Inoltre se dal punto di visto logico può risultare incoerente, comunque si può accettare che diverse pubblicazioni dello stesso anno si citino fra di loro, specie se sono in corso di pubblicazione. Questa scelta privilegia le prestazioni, di conseguenza è quella che è stata selezionata come opzione migliore
+\\ \textbf{Strategia 2: Sostituire l'anno con una data completa}
+\\ Cambiando l'attributo \textit{AnnoPubblicazione} con una data completa (es. \textit{DataPubblicazione}), si potrebbe implementare un controllo più preciso che impedisce le citazioni circolari anche fra pubblicazioni dello stesso anno. Tuttavia, questa strategia richiede una modifica non richiesta dai requisiti del progetto, comporta un aumento della complessità del modello e potrebbe non essere giustificata se i dati disponibili non includono informazioni più granulari sulla data di pubblicazione. 
+\\ \textbf{Strategia 3: Implementare un controllo di ciclicità più complesso}
+\\ In alternativa, per un controllo rigoroso a livello logico, si potrebbbe implementare un algoritmo di rilevamento dei cicli. Un algoritmo pensato per questo scopo è quello basato sulla visità in profondità (DFS) del grafo, mantenendo come vertici le pubblicazioni e come archi le citazioni. Per evitare che questa visita diventi troppo onerosa, si è pensato che andrebbe limitata ad un certo numero di livelli (es. 3-4 livelli) per evitare un'esplorazione troppo ampia del grafo. L'analisi di questa strategia è che avendo un alto numero di citazioni per pubblicazione, la verifica del grafo ad ogni inserimento risulta sempre troppo onerosa (complessità dell'algoritmo DFS è O(V+E), dove V è il numero di pubblicazioni e E è il numero di citazioni). Si conclude che il tradeoff tra coerenza logica e prestazioni è troppo sbilanciato con questa strategia.
+
 \subsubsection{Trigger per il decremento del numero di citazioni}
 A seguito di una cancellazione di una citazione, è necessario decrementare il numero di citazioni della pubblicazione citata. 
 \begin{lstlisting}
